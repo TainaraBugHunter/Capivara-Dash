@@ -17,6 +17,8 @@ let velocidadeItens = 1;
 let leftPressed = false;
 let rightPressed = false;
 
+let musicaFundo, somComida, somPerdeVida, somGameOver;
+
 function preload() {
   capivara = loadImage('assets/capivara.png ');
   comidaImg = loadImage('assets/comida.png');
@@ -24,6 +26,11 @@ function preload() {
   fundoImg = loadImage('assets/fundo.jpeg');
   coracaoCheio = loadImage('assets/coracaoCheio.png');
   coracaoVazio = loadImage('assets/coracaoVazio.png');
+  // Sons
+  musicaFundo = loadSound('assets/fundo.mp3');
+  somComida = loadSound('assets/comida.mp3');
+  somPerdeVida = loadSound('assets/vida.mp3');
+  somGameOver = loadSound('assets/gameover.mp3');
 }
 
 function setup() {
@@ -66,14 +73,16 @@ function draw() {
     if (collideRectRect(capivaraX, capivaraY, 70, 70, comida.x, comida.y, 40, 40)) {
       score += 10;
       comidinhas.splice(i, 1);
+      somComida.play();
       updateFase();
       updateHUD();
-      continue; // <-- IMPORTANTE: pula para o próximo item, não testa o else if!
+      continue;
     }
     // Só testa se perdeu vida se NÃO pegou a comida
     else if (comida.y > height) {
       lives--;
       comidinhas.splice(i, 1);
+      somPerdeVida.play();
       if (lives <= 0) gameOver();
       updateHUD();
     }
@@ -87,6 +96,7 @@ function draw() {
     if (collideRectRect(capivaraX, capivaraY, 70, 70, ovo.x, ovo.y, 40, 40)) {
       lives--;
       ovos.splice(i, 1);
+      somPerdeVida.play();
       if (lives <= 0) gameOver();
       updateHUD();
     } else if (ovo.y > height) {
@@ -144,6 +154,9 @@ function startGame() {
   document.getElementById('game-ui').style.display = 'flex';
   document.getElementById('game-over-popup').style.display = 'none';
 
+  if (musicaFundo.isPlaying()) musicaFundo.stop();
+  musicaFundo.loop();
+  
   gameStarted = true;
   score = 0;
   displayedScore = 0;
@@ -167,6 +180,8 @@ function restartGame() {
 function gameOver() {
   noLoop();
   gameStarted = false;
+  musicaFundo.stop();
+  somGameOver.play();
   document.getElementById('final-score').innerText = score;
   document.getElementById('game-over-popup').style.display = 'block';
 }
