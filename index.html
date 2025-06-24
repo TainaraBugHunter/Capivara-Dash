@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Capivara Dash</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.2/p5.min.js"></script>
+  <script src="script.js" defer></script>
+</head>
+<body>
+
+  <!-- Tela de Início -->
+  <div id="start-screen">
+    <h1 id="game-title">Capivara Dash</h1>
+    <p>Use as setas ← e → para mover a capivara.<br>
+       Pegue as comidinhas para ganhar pontos.<br>
+       Evite os ovos para não perder vidas.<br>
+       Você tem 3 vidas. Boa sorte!</p>
+    <button onclick="startGame()">Jogar</button>
+  </div>
+
+  <!-- Interface do Jogo -->
+  <div class="container1" id="game-ui" style="display: none;">
+    <!-- Título lateral esquerdo -->
+    <div id="left-bar">
+      <span style="transform: rotate(0deg); display: inline-block;">CAPIVARA DASH</span>
+    </div>
+
+    <!-- Canvas do jogo -->
+    <div id="game-canvas"></div>
+
+    <!-- HUD lateral direita -->
+    <div id="right-bar">
+      <div><strong>Pontos:</strong> <span id="hud-score">0</span></div>
+      <div><strong>Fase:</strong> <span id="hud-fase">1</span></div>
+    </div>
+  </div>
+
+  <!-- Tela de Game Over -->
+  <div id="game-over-popup" style="display: none;">
+    <h2>Game Over!</h2>
+    <p>Sua pontuação: <span id="final-score">0</span></p>
+    <button onclick="restartGame()">Jogar Novamente</button>
+  </div>
+
+</body>
+</html>
