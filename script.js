@@ -62,12 +62,16 @@ function draw() {
     comida.y += velocidadeItens;
     image(comidaImg, comida.x, comida.y, 40, 40);
 
+    // Primeiro testa se pegou a comida
     if (collideRectRect(capivaraX, capivaraY, 70, 70, comida.x, comida.y, 40, 40)) {
       score += 10;
       comidinhas.splice(i, 1);
       updateFase();
       updateHUD();
-    } else if (comida.y > height) {
+      continue; // <-- IMPORTANTE: pula para o próximo item, não testa o else if!
+    }
+    // Só testa se perdeu vida se NÃO pegou a comida
+    else if (comida.y > height) {
       lives--;
       comidinhas.splice(i, 1);
       if (lives <= 0) gameOver();
@@ -169,7 +173,6 @@ function gameOver() {
 
 function updateHUD() {
   document.getElementById('hud-score').innerText = score;
-  document.getElementById('hud-lives').innerText = lives;
   document.getElementById('hud-fase').innerText = fase;
 }
 
